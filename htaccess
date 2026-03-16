@@ -1,0 +1,115 @@
+RewriteEngine On
+
+# ---------------- REMOVE TRACKING PARAMETERS ----------------
+RewriteCond %{QUERY_STRING} (^|&)utm_[^&]+ [NC]
+RewriteRule ^ %{REQUEST_URI}? [R=301,L]
+
+
+# ---------------- FIX HOMEPAGE DUPLICATES ----------------
+
+RewriteCond %{THE_REQUEST} \s/index\.php
+RewriteRule ^index\.php$ / [R=301,L]
+
+
+# ---------------- PAGINATION QUERY FIX ----------------
+
+RewriteCond %{QUERY_STRING} ^page=([0-9]+)$
+RewriteRule ^$ /page/%1? [R=301,L]
+
+
+# ---------------- CLEAN TAG QUERY URL ----------------
+
+RewriteCond %{QUERY_STRING} ^tag=([^&]+)$
+RewriteRule ^index\.php$ /tag/%1? [R=301,L]
+
+
+# ---------------- CLEAN TAG + PAGE=1 DUPLICATE ----------------
+
+RewriteCond %{QUERY_STRING} ^tag=([^&]+)&page=1$
+RewriteRule ^$ /tag/%1? [R=301,L]
+
+
+# ---------------- CLEAN CATEGORY QUERY DUPLICATE ----------------
+
+RewriteCond %{QUERY_STRING} ^category_id=([0-9]+)&page=1$
+RewriteRule ^$ /? [R=301,L]
+
+
+
+
+# Prevent fake movie/category URL
+RewriteRule ^movie/category/?$ / [R=301,L]
+
+
+
+# ---------------- EXCLUDE FAVICONS ----------------
+
+RewriteCond %{REQUEST_URI} ^/favicon\.png$ [OR]
+RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+RewriteRule ^ - [L]
+
+
+# ---------------- MOVIE ROUTES ----------------
+RewriteRule ^movie/([0-9]+)/?$ movie.php?id=$1 [L,QSA]
+RewriteRule ^movie/([a-zA-Z0-9-]+)/?$ movie.php?slug=$1 [L,QSA]
+
+# ---------------- CATEGORY ROUTES ----------------
+RewriteRule ^category/([a-zA-Z0-9-]+)/?$ category.php?slug=$1 [L,QSA]
+RewriteRule ^category/([a-zA-Z0-9-]+)/page/([0-9]+)/?$ category.php?slug=$1&page=$2 [L,QSA]
+
+# ---------------- TAG ROUTES ----------------
+RewriteRule ^tag/([A-Za-z0-9-]+)/?$ index.php?tag=$1 [L,QSA]
+RewriteRule ^tag/([A-Za-z0-9-]+)/page/([0-9]+)/?$ index.php?tag=$1&page=$2 [L,QSA]
+
+
+# ---------------- PAGINATION ROUTES ----------------
+RewriteRule ^page/([0-9]+)/?$ index.php?page=$1 [L,QSA]
+
+
+# ---------------- BLOG ROUTES ----------------
+
+RewriteRule ^blog/?$ blog/index.php [L]
+RewriteRule ^blog/page/([0-9]+)/?$ blog/index.php?page=$1 [L,QSA]
+RewriteRule ^blog/category/([^/]+)/?$ blog/category.php?slug=$1 [L,QSA]
+RewriteRule ^blog/tag/([^/]+)/?$ blog/tag.php?slug=$1 [L,QSA]
+RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ blog/single.php?slug=$1 [L,QSA]
+
+# ---------------- REDIRECT WRONG ROOT SLUGS ----------------
+RewriteCond %{REQUEST_URI} !^/movie/
+RewriteCond %{REQUEST_URI} !^/category/
+RewriteCond %{REQUEST_URI} !^/tag/
+RewriteCond %{REQUEST_URI} !^/blog/
+RewriteCond %{REQUEST_URI} !^/page/
+RewriteCond %{REQUEST_URI} !^/sitemap
+RewriteCond %{REQUEST_URI} !^/$
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|xml|txt)$
+RewriteRule ^([a-zA-Z0-9-]+)/?$ /movie/$1 [R=301,L]
+
+
+# ---------------- SITEMAP ROUTES ----------------
+
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^sitemap-movies\.xml$ sitemap-movies.php [L]
+RewriteRule ^sitemap-categories\.xml$ sitemap-categories.php [L]
+RewriteRule ^sitemap-tags\.xml$ sitemap-tags.php [L]
+
+RewriteRule ^sitemap-blog\.xml$ sitemap-blog.php [L]
+RewriteRule ^sitemap-blog-categories\.xml$ sitemap-blog-categories.php [L]
+RewriteRule ^sitemap-blog-tags\.xml$ sitemap-blog-tags.php [L]
+
+
+# ---------------- PERFORMANCE ----------------
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/webp "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/x-icon "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+</IfModule>

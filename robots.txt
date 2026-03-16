@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /config.php
+Disallow: /includes/
+Disallow: /admin/
+Disallow: /cgi-bin/
+
+Sitemap: https://dlmoviehub.online/sitemap.xml
