@@ -1,16 +1,33 @@
-## Hi there 👋
+# DLmovieHub
 
-<!--
-**dlmoviehub/dlmoviehub** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+DLmovieHub is an online platform where users can explore movie updates, OTT releases, and download links for popular films and web series.
 
-Here are some ideas to get you started:
+Official Website:
+https://dlmoviehub.online
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Features
+
+• Bollywood Movies
+• Hollywood Movies
+• Dual Audio Movies
+• Web Series
+• OTT Release Updates
+• Category Based Navigation
+• Movie Releted Blog
+
+## Categories
+
+Browse all movie categories here:
+https://dlmoviehub.online/category
+
+## Latest Movies
+
+You can explore the latest movie releases and download links on the official website:
+
+https://dlmoviehub.online
+
+## Blog
+
+You can browse blog here:
+
+https://dlmoviehub.online/blog/
